@@ -1,7 +1,6 @@
 const { Sequelize } = require('sequelize');
-const userModel = require('./user');
-const interviewModel = require('./interview');
-const formSubmissionModel = require('./formSubmission');
+const User = require('./user');
+const Interview = require('./interview');
 
 const sequelize = new Sequelize({
   dialect: 'postgres',
@@ -13,20 +12,16 @@ const sequelize = new Sequelize({
   logging: false
 });
 
-const models = {
-  User: userModel(sequelize),
-  Interview: interviewModel(sequelize),
-  FormSubmission: formSubmissionModel(sequelize)
-};
+// Initialize models
+User.init(sequelize);
+Interview.init(sequelize);
 
 // Set up associations
-Object.keys(models).forEach(modelName => {
-  if (models[modelName].associate) {
-    models[modelName].associate(models);
-  }
-});
+User.associate({ Interview });
+Interview.associate({ User });
 
 module.exports = {
   sequelize,
-  ...models
+  User,
+  Interview
 }; 
