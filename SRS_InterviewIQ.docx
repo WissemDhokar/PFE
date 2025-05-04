@@ -1,0 +1,53 @@
+FR6: Admin shall have access to a secure dashboard with elevated privileges for managing candidate profiles and interviews, with role-based access control and all actions being logged and monitored for security.
+
+FR7: All admin actions shall be logged and monitored, with multi-factor authentication required for sensitive operations and session timeouts enforced for security.
+
+6.1 Admin Dashboard Access
+- The system shall provide a secure admin dashboard accessible only to authenticated administrators
+- The dashboard shall require multi-factor authentication for enhanced security
+- Admin access shall be logged and audited for security purposes
+
+6.2 Admin Privileges
+- Admins shall have elevated privileges to:
+  - View and manage all candidate profiles
+  - Access and modify interview settings
+  - Configure system parameters
+  - Monitor system usage and performance
+  - Generate and export reports
+  - Manage user accounts and permissions
+
+6.3 Candidate Management
+- Admins shall be able to:
+  - View complete candidate profiles
+  - Search and filter candidates
+  - Update candidate status
+  - Access interview history and results
+  - Export candidate data
+  - Manage interview scheduling
+
+6.4 Interview Management
+- Admins shall be able to:
+  - Configure interview parameters
+  - Set up question banks
+  - Define evaluation criteria
+  - Monitor ongoing interviews
+  - Review and validate interview results
+  - Generate interview reports
+
+6.5 Access Control
+- The system shall implement role-based access control (RBAC) with the following roles:
+  - Super Admin: Full system access and configuration rights
+  - Admin: Full operational access with limited configuration rights
+  - HR Manager: Access to candidate management and interview results
+  - Interviewer: Access to conduct interviews and view assigned candidates
+  - Candidate: Access to their own profile and interview sessions
+
+6.6 Security Requirements
+- All admin actions shall be logged with:
+  - Timestamp
+  - User ID
+  - Action performed
+  - Affected resources
+- Sensitive operations shall require additional authentication
+- Session timeouts shall be enforced for admin sessions
+- Failed login attempts shall be monitored and limited 
