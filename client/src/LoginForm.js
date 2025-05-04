@@ -7,7 +7,6 @@ function LoginForm({ onLogin }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -16,8 +15,7 @@ function LoginForm({ onLogin }) {
     setLoading(true);
 
     try {
-      // Get JWT tokens
-      const response = await fetch('http://localhost:8000/api/token/', {
+      const response = await fetch('http://localhost:3001/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,41 +28,22 @@ function LoginForm({ onLogin }) {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.detail || 'Login failed');
+        throw new Error(errorData.message || 'Login failed');
       }
 
-      const tokens = await response.json();
+      const data = await response.json();
       
-      // Store tokens
-      localStorage.setItem('access_token', tokens.access);
-      localStorage.setItem('refresh_token', tokens.refresh);
-
-      // Get user data
-      const userResponse = await fetch('http://localhost:8000/api/user/', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${tokens.access}`,
-        },
-      });
-
-      if (!userResponse.ok) {
-        throw new Error('Failed to get user data');
-      }
-
-      const userData = await userResponse.json();
-      localStorage.setItem('user', JSON.stringify(userData));
+      // Store token and user data
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
       
       // Update login state
       if (onLogin) {
-        onLogin(true);
+        onLogin(data.user, data.token);
       }
       
-      // Navigate based on user role
-      if (userData.is_staff) {
-        navigate('/admin');
-      } else {
-        navigate('/dashboard');
-      }
+      // Navigate to dashboard
+      navigate('/dashboard');
     } catch (err) {
       console.error('Login error:', err);
       setError(err.message || 'An error occurred during login');
@@ -152,25 +131,6 @@ function LoginForm({ onLogin }) {
                   />
                 </motion.div>
 
-                {/* Admin Toggle Switch */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="flex items-center justify-center space-x-2"
-                >
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      className="sr-only peer"
-                      checked={isAdmin}
-                      onChange={(e) => setIsAdmin(e.target.checked)}
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                    <span className="ml-3 text-sm font-medium text-gray-700">Admin Login</span>
-                  </label>
-                </motion.div>
-
                 {error && (
                   <motion.div 
                     className="text-red-500 text-sm text-center bg-red-50 p-3 rounded-lg"
@@ -193,7 +153,7 @@ function LoginForm({ onLogin }) {
                     whileTap={{ scale: 0.98 }}
                     className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-4 rounded-xl text-lg font-medium transition duration-200 shadow-lg disabled:opacity-50"
                   >
-                    {loading ? 'Signing in...' : isAdmin ? 'Sign In as Admin' : 'Sign In'}
+                    {loading ? 'Signing in...' : 'Sign In'}
                   </motion.button>
                 </motion.div>
               </motion.form>
