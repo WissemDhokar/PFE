@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import myPhoto from './assets/myphoto.jpeg';
 
 function LoginForm({ onLogin }) {
   const [email, setEmail] = useState('');

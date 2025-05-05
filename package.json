@@ -11,12 +11,15 @@
     "@splinetool/runtime": "^1.9.82",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.2",
+    "bootstrap": "^4.6.2",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^4.21.2",
+    "jquery": "^3.7.1",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.15.6",
     "pg-hstore": "^2.3.4",
+    "popper.js": "^1.16.1",
     "sequelize": "^6.37.7"
   }
 }
