@@ -6,7 +6,7 @@ import InterviewForm from './InterviewForm';
 import InterviewPage from './InterviewPage';
 import AdminPage from './AdminPage';
 import RegistrationPage from './RegistrationPage';
-import DashboardPage from './DashboardPage';
+import DashboardPage from './DashboardPage.new';
 import AdminDashboard from './AdminDashboard';
 
 // Protected Route component
